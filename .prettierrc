@@ -1,0 +1,26 @@
+{
+  "printWidth": 120,
+  "endOfLine": "crlf",
+  "useTabs": false,
+  "tabWidth": 2,
+  "trimTrailingWhitespace": true,
+  "insertFinalNewline": true,
+  "overrides": [
+    {
+      "files": ["*.{js,tsx,css,scss}"],
+      "options": {
+        "charset": "utf-8",
+        "tabWidth": 2,
+        "useTabs": false
+      }
+    },
+    {
+      "files": ["package.json", ".travis.yml"],
+      "options": {
+        "tabWidth": 2,
+        "useTabs": false
+      }
+    }
+  ],
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
