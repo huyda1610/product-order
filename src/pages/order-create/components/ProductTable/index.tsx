@@ -54,7 +54,7 @@ const ProductTable: React.FC<PropsType> = ({ viewOnly }) => {
     [],
   );
 
-  const handleCalculateTotalPrice = (product: ProductsDto): string => {
+  const handleCalcPriceWithDiscount = (product: ProductsDto): string => {
     const calculateFn = DISCOUNTS.find((discount) => discount.id === product.discount)?.action;
     if (!calculateFn) return (product.price * product.quantity).toCurrencyFormat();
     return calculateFn(product.price * product.quantity).toCurrencyFormat();
@@ -177,9 +177,9 @@ const ProductTable: React.FC<PropsType> = ({ viewOnly }) => {
                 <td className="w-[200px] px-4 py-4 text-gray-900">
                   <div>
                     <p className={product.discount ? "line-through" : ""}>
-                      {(product.price * product.quantity).toLocaleString("vi-VN")} VNĐ
+                      {(product.price * product.quantity).toCurrencyFormat()} VNĐ
                     </p>
-                    {product.discount && <p>{handleCalculateTotalPrice(product)} VNĐ</p>}
+                    {product.discount && <p>{handleCalcPriceWithDiscount(product)} VNĐ</p>}
                   </div>
                 </td>
                 {!viewOnly && (
