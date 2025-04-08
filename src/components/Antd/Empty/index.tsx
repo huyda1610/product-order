@@ -1,5 +1,5 @@
 import RenderIf from "@components/RenderIf";
-import EmptySvg from "@components/Svg/Empty";
+import EmptySvg from "@components/Svg/empty-svg";
 import { Button, Empty, EmptyProps } from "antd";
 
 type ShareAntEmptyProps = EmptyProps & {
