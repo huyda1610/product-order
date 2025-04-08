@@ -8,5 +8,7 @@ export type ContextType = {
   products: ProductsDto[];
   setProducts: React.Dispatch<React.SetStateAction<ProductsDto[]>>;
 
+  totalDefaultPrice: number;
+  totalDiscount: number;
   totalPrice: number;
 };

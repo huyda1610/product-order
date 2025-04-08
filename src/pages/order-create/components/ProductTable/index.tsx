@@ -16,7 +16,7 @@ type PropsType = {
 };
 
 const ProductTable: React.FC<PropsType> = ({ viewOnly }) => {
-  const { products, setProducts, totalPrice } = useOrderCreate();
+  const { products, setProducts, totalPrice, totalDiscount, totalDefaultPrice } = useOrderCreate();
   const [removingId, setRemovingId] = useState<string | null>(null); // ID của phần tử đang bị xóa
 
   const handleDecreaseQuantity = (productId: string): void => {
@@ -66,24 +66,6 @@ const ProductTable: React.FC<PropsType> = ({ viewOnly }) => {
     );
   };
 
-  const calculateTotalDiscount = (products: ProductsDto[]): number => {
-    let totalDiscount = 0;
-
-    products.forEach((product) => {
-      const originalPrice = product.price * product.quantity;
-
-      if (product.discount) {
-        const discount = DISCOUNTS.find((d) => d.id === product.discount);
-        if (discount) {
-          const discountedPrice = discount.action(originalPrice);
-          totalDiscount += originalPrice - discountedPrice;
-        }
-      }
-    });
-
-    return totalDiscount;
-  };
-
   return (
     <>
       <div className="w-full overflow-x-auto">
@@ -115,7 +97,7 @@ const ProductTable: React.FC<PropsType> = ({ viewOnly }) => {
               >
                 <td className="flex w-[300px] items-center gap-3 px-4 py-4">
                   <img
-                    src={`/src/assets/img/${product.image}`}
+                    src={`/img/${product.image}`}
                     alt={product.name}
                     className="h-11 w-11 rounded-md bg-gray-200"
                     loading="lazy"
@@ -208,17 +190,15 @@ const ProductTable: React.FC<PropsType> = ({ viewOnly }) => {
       <section className="flex w-full flex-col items-end gap-2">
         <div className="flex w-full justify-end text-base">
           <span className="text-text-secondary text-right">Tổng giá gốc</span>
-          <strong className="text-text ml-4">{totalPrice.toCurrencyFormat()} VNĐ</strong>
+          <strong className="text-text ml-4">{totalDefaultPrice.toCurrencyFormat()} VNĐ</strong>
         </div>
         <div className="flex w-full justify-end text-base">
           <span className="text-text-secondary text-right">Giảm giá</span>
-          <strong className="text-error ml-4"> - {calculateTotalDiscount(products).toCurrencyFormat()} VNĐ</strong>
+          <strong className="text-error ml-4"> - {totalDiscount.toCurrencyFormat()} VNĐ</strong>
         </div>
         <div className="flex w-full justify-end text-lg">
           <span className="text-text-secondary text-right">Tổng</span>
-          <strong className="text-text ml-4">
-            {(totalPrice - calculateTotalDiscount(products)).toCurrencyFormat()} VNĐ
-          </strong>
+          <strong className="text-text ml-4">{totalPrice.toCurrencyFormat()} VNĐ</strong>
         </div>
       </section>
     </>
